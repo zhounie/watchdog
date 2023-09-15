@@ -6,9 +6,10 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c ./build/rollup.config.js"
+    "build": "rollup -w -c ./build/rollup.config.js"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-node-resolve": "^15.2.1",
     "@rollup/plugin-typescript": "^11.1.3",
     "rollup": "^3.29.1"
@@ -17,6 +18,5 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@watchdog/utils": "workspace:*"
   }
 }

@@ -1,20 +1,21 @@
-import { parseStack } from '../../utils/index'
-const errors = []
+import { parseStack } from '../utils/index'
+
+const errors: ErrorItem[] = []
 export const monitor = () => {
     window.onerror = (errorMessage, sourceURL, lineNumber, columnNumber) => {
-        console.log('err', errorMessage, sourceURL, lineNumber, columnNumber);
-        errors.push({
-            errorMessage, sourceURL, lineNumber, columnNumber            
-        })
+        if (errorMessage === 'string') {
+            errors.push({
+                message: errorMessage,
+                source: sourceURL,
+                lineno: lineNumber,
+                colno: columnNumber
+            })
+        }
     }
 
     window.addEventListener('unhandledrejection', (event) => {
-        const { message, stack } = event.reason
-        const {} = parseStack(stack)
-        console.log('err', message, stack);
-        errors.push({
-            message,
-            stack
-        })
+        const { stack } = event.reason
+        const errorItem = parseStack(stack)
+        errors.push(errorItem)
     })
 }

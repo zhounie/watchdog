@@ -1,6 +1,5 @@
 {
-  "compilerOptions": {
-  },
-  "include": ["**/*"],
-  "exclude": []
+    "compilerOptions": {
+        "types": ["types/index.d.ts"]
+    }
 }
