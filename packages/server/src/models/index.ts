@@ -15,9 +15,20 @@ export class UserModel {
         return res
     }
 
-    save() {}
+    async findOne(query) {
+        const res = await User.findOne(query)
+        return res
+    }
 
-    update() {}
+    async save(params) {
+        const res = await User.create(params)
+        return res
+    }
+
+    async update(query, params) {
+        const res = await User.findOneAndUpdate(query, params)
+        return res
+    }
 
     async del(id) {
         const res = await User.findOneAndRemove(id)

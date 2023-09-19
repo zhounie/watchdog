@@ -1,4 +1,5 @@
 import { UserModel } from '../models'
+import jwt from 'jsonwebtoken'
 
 
 class UsersClass {
@@ -8,7 +9,6 @@ class UsersClass {
     }
     getUsers = async (ctx, next) => {
         const users = await this.User.get()
-        
         ctx.body = {
             code: 200,
             data: users
@@ -21,10 +21,30 @@ class UsersClass {
             data: users
         }
     }
-    addUser() {
-
+    addUser = async (ctx, next) => {
+        const { username, password } = ctx.request.body
+        try {
+            await this.User.save({ username, password })
+            ctx.body = {
+                code: 200,
+                data: true
+            }
+        } catch (error) {
+            
+        }
     }
-    updateUser() {}
+    updateUser = async (ctx) => {
+        const { _id, ...params} = ctx.request.body
+        try {
+            await this.User.update({ _id }, params)
+            ctx.body = {
+                code: 200,
+                data: true
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     delUser = async (ctx) => {
         try {
             await this.User.del(ctx.params.id)
@@ -34,6 +54,29 @@ class UsersClass {
             }
         } catch (error) {
             
+        }
+    }
+    login = async (ctx) => {
+        const { username, password } = ctx.request.body
+        const user = await this.User.findOne({ username, password })
+        if(!user) {
+            return ctx.body = {
+                code: 403,
+                data: null,
+                msg: '用户名或密码错误!'
+            }
+        }
+        
+        const token = jwt.sign({
+            username: user.username,
+            password: user.password,
+        }, 'wocao', {
+            expiresIn: 60
+        })
+        ctx.body = {
+            code: 200,
+            data: token,
+            msg: '登录成功'
         }
     }
 }

@@ -2,14 +2,17 @@ import Koa from 'koa'
 import koaBodyparser from 'koa-bodyparser'
 import Db from './db/index'
 import Router from './routes/index'
+import errorMiddleware from './middleware/errorMiddleware'
+import jwtMiddleware from './middleware/jwtMiddleware'
 
 const app = new Koa()
 
 new Db()
 
+app.use(errorMiddleware())
+app.use(jwtMiddleware())
 app.use(koaBodyparser())
 app.use(Router.routes())
-
 
 
 app.listen(3000, () => {

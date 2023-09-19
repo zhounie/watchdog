@@ -8,4 +8,5 @@ export default function (router) {
     .post('/user', Users.addUser)
     .put('/user', Users.updateUser)
     .del('/user/:id', Users.delUser)
+    .post('/user/login', Users.login)
 }

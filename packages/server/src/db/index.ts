@@ -13,18 +13,6 @@ export default class DB {
             dbName: 'watchdog',
         }).then(() => {
             console.log(`数据库链接成功`);
-
-            new User({
-                username: 'admin',
-                password: '123456'
-            }).save().then(() => {
-                console.log('success');
-                
-            }).catch((err) => {
-                console.log(err);
-                
-            })
-            
         }).catch(err => {
             console.error(err);
         })
