@@ -6,8 +6,6 @@
 
 <template>
     <div>
-        我草: {{ value }}
-        <button @click="value++">Insert</button>
         <router-view></router-view>
     </div>
 </template>
