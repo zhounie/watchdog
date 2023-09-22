@@ -21,9 +21,11 @@
     "@iszhounie/eslint-config": "^1.0.3",
     "@jest/globals": "^29.7.0",
     "@types/node": "^20.6.0",
+    "@types/supertest": "^2.0.12",
     "eslint": "^8.49.0",
     "http-server": "^14.1.1",
     "jest": "^29.7.0",
+    "supertest": "^6.3.3",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2"
   },

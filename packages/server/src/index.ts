@@ -5,7 +5,7 @@ import Router from './routes/index'
 import errorMiddleware from './middleware/errorMiddleware'
 import jwtMiddleware from './middleware/jwtMiddleware'
 
-const app = new Koa()
+export const app = new Koa()
 
 new Db()
 
