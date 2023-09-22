@@ -11,12 +11,16 @@
     "client:dev": "pnpm run --filter @watchdog/client dev",
     "client:build": "pnpm run --filter @watchdog/client build",
     "client:preview": "pnpm run --filter @watchdog/client preview",
-    "demo": "http-server"
+    "demo": "http-server",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@iszhounie/eslint-config": "^1.0.3",
     "@types/node": "^20.6.0",
+    "eslint": "^8.49.0",
     "http-server": "^14.1.1",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2"
