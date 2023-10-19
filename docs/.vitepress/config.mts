@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "WatchDog",
   description: "A WatchDog Site",
+  base: "/watchdog/",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
