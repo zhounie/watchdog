@@ -13,7 +13,8 @@
     "client:preview": "pnpm run --filter @watchdog/client preview",
     "demo": "http-server",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "docs:build": "pnpm run --filter docs docs:build"
   },
   "author": "",
   "license": "ISC",
