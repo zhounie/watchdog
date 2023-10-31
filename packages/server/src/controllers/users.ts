@@ -71,7 +71,7 @@ class UsersClass {
             username: user.username,
             password: user.password,
         }, 'wocao', {
-            expiresIn: 60
+            expiresIn: 60000
         })
         ctx.body = {
             code: 200,
