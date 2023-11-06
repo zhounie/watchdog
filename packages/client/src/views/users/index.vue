@@ -37,6 +37,13 @@
         })
     }
 
+    const onSearch=  () => {
+        getList()
+    }
+    const onReset = () => {
+        getList()
+    }
+
     onMounted(() => {
         getList()
     })
@@ -44,7 +51,7 @@
 
 <template>
     <div>
-        <dogSearch v-model="form" :fields="fields" />
+        <dogSearch v-model="form" :fields="fields" @search="onSearch" @reset="onReset" />
         <dogTable :columns="columns" :data="data">
             <template #button="{row}">
                 <a-button type="link">编辑</a-button>
