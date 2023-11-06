@@ -45,6 +45,10 @@
       key: 'errors',
       label: 'errors',
       title: 'errors'
+    },{
+      key: 'users',
+      label: 'users',
+      title: 'users'
     }
   ])
 

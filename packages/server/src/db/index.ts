@@ -5,7 +5,22 @@ const userSchema = new mongoose.Schema({
     password: String
 })
 
+
+const errorsSchema = new mongoose.Schema({
+    message: String,
+    source: String,
+    lineno: Number,
+    colno: Number
+})
+
+const applicationSchema = new mongoose.Schema({
+    name: String
+})
+
+
 export const User = mongoose.model('User', userSchema)
+export const Errors = mongoose.model('Errors', errorsSchema)
+export const application = mongoose.model('applicationSchema', applicationSchema)
 
 export default class DB {
     constructor() {

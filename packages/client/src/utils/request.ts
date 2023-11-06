@@ -1,5 +1,6 @@
 import axios from 'axios'
 import type { AxiosRequestConfig } from 'axios'
+import router from '../router/index'
 
 
 const instance = axios.create({
@@ -16,6 +17,14 @@ instance.interceptors.request.use((config) => {
 })
 
 instance.interceptors.response.use((response) => {
+    if (response.status === 200) {
+        if(response.data.code === 403) {
+            router.push({
+                path: '/login'
+            })
+        }
+        return response.data
+    }
     return response
 })
 
@@ -29,13 +38,21 @@ export const POST = async (url: string, params: Record<string, any> = {}) => {
     return await request({
         method: 'post',
         url,
-        params
+        data: params
     })
 }
 
 export const GET = async (url: string, params: Record<string, any> = {}) => {
     return await request({
         method: 'get',
+        url,
+        params
+    })
+}
+
+export const DELETE = async (url: string, params: Record<string, any> = {}) => {
+    return await request({
+        method: 'delete',
         url,
         params
     })

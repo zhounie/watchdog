@@ -12,7 +12,8 @@ const routes: RouteRecordRaw[] = [
         name: '',
         component: () => import('@/layout/index.vue'),
         children: [
-            { path: '/errors', component: () => import('@/views/errors/index.vue') }
+            { path: '/errors', component: () => import('@/views/errors/index.vue') },
+            { path: '/users', component: () => import('@/views/users/index.vue') },
         ]
     }
 ]
@@ -22,8 +23,6 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes: routes
 })
-
-console.log(router.getRoutes());
 
 
 export default router

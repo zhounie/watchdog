@@ -18,4 +18,15 @@ export const monitor = () => {
         const errorItem = parseStack(stack)
         errors.push(errorItem)
     })
+
+    // window.addEventListener("error", (event) => {
+    //     // 判断是否是资源加载错误
+    //     if (
+    //       event.target instanceof HTMLImageElement ||
+    //       event.target instanceof HTMLScriptElement ||
+    //       event.target instanceof HTMLLinkElement
+    //     ) {
+    //       console.error("资源加载错误:", event.target.src || event.target.href);
+    //     }
+    // });
 }

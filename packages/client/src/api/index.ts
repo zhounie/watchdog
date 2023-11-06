@@ -1,5 +1,5 @@
+import { POST, GET, DELETE } from '@/utils/request'
 
-
-import { POST, GET } from '@/utils/request'
-
-export const GetErrorsList = (params = {}) => GET('/user', params)
+export const GetUserList = (params = {}) => GET('/user', params)
+export const DeleteUser = (params = {}) => DELETE(`/user/${params.id}`, params)
+export const Login = (params={}) => POST('/user/login', params)
