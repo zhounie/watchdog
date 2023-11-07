@@ -1,38 +1,28 @@
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
-import type { FormLayout } from 'ant-design-vue/es/form/Form'
+import { defineComponent, reactive, shallowRef, computed, ref } from 'vue'
+import type { FormLayout, FormInstance } from 'ant-design-vue/es/form/Form'
 
 type DogFormProps = {
     layout: FormLayout,
-    fields: {}
+    fields: {},
+    modelValue: {}
 }
 export default defineComponent((props: DogFormProps) => {
-    
-    interface FormState {
-        username: string;
-        password: string;
-        remember: boolean;
+
+    const rawForm = ref(props.modelValue)
+
+    const formRef = shallowRef<FormInstance>()
+
+    const resetFields = () => {
+        formRef.value?.resetFields()
     }
-
-    const formState = reactive<FormState>({
-        username: '',
-        password: '',
-        remember: true,
-    });
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    };
-
 
     return {
-        formState,
-        onFinish,
-        onFinishFailed
+        resetFields,
+        rawForm,
+        formRef
     }
+
 }, {
     name: 'dogForm',
     props: {
@@ -40,33 +30,34 @@ export default defineComponent((props: DogFormProps) => {
             type: String,
             default: false
         },
-        form: {},
+        modelValue: {
+            type: Object,
+            default: () => ({})
+        },
         fields: {
             type: Object,
             default: () => ({})
         }
-    }
+    },
+    emits: ['update:modelValue']
 })
 </script>
 
 <template>
     <div>
         <a-form
-            :model="formState"
+            ref="formRef"
+            :model="modelValue"
             name="basic"
-            :label-col="{ span: 8 }"
-            :wrapper-col="{ span: 16 }"
             autocomplete="off"
             :layout="layout"
-            @finish="onFinish"
-            @finishFailed="onFinishFailed"
         >
             <a-form-item
                 v-for="(field, key) in fields"
                 :label="field.label"
                 :name="key"
             >
-                <a-input v-model:value="formState.username" />
+                <a-input v-model:value="modelValue[key]" @input="$emit('update:modelValue', modelValue)" />
             </a-form-item>
         </a-form>
     </div>

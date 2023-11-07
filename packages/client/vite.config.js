@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'node:path'
+import UnoCss from 'unocss/vite'
 
 export default defineConfig(() => {
     return {
-        plugins: [vue()],
+        plugins: [vue(), UnoCss()],
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, 'src')

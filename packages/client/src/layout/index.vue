@@ -17,9 +17,11 @@
           <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
         </a-layout-header>
         <a-layout-content
-          :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
+          class="main-box"
         >
-          <router-view></router-view>
+          <main>
+            <router-view></router-view>
+          </main>
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -81,5 +83,16 @@
   
   .site-layout .site-layout-background {
     background: #fff;
+  }
+
+  .main-box {
+    padding: 24px;
+    height: calc(100vh - 64rpx);
+    overflow-y: scroll;
+    main {
+      background: #fff;
+      border-radius: 10px;
+      padding: 24px 16px;
+    }
   }
   </style>

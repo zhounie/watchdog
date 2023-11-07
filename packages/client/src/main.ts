@@ -8,6 +8,8 @@ import dogForm from './components/dogForm.vue'
 import dogSearch from './components/dogSearch.vue'
 import dogTable from './components/dogTable.vue'
 
+import 'virtual:uno.css'
+
 const app = createApp(App)
 app.component(dogForm.name, dogForm)
 app.component(dogTable.name, dogTable)

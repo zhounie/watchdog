@@ -57,3 +57,11 @@ export const DELETE = async (url: string, params: Record<string, any> = {}) => {
         params
     })
 }
+
+export const PUT = async (url: string, params: Record<string, any> = {}) => {
+    return await request({
+        method: 'put',
+        url,
+        data: params
+    })
+}

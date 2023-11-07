@@ -8,7 +8,8 @@ class UsersClass {
     constructor() {
     }
     getUsers = async (ctx, next) => {
-        const users = await this.User.get()
+        const users = await this.User.get(ctx.request.query)
+        
         ctx.body = {
             code: 200,
             data: users
@@ -24,6 +25,14 @@ class UsersClass {
     addUser = async (ctx, next) => {
         const { username, password } = ctx.request.body
         try {
+            const user = await this.User.findOne({ username })
+            if (user) {
+                return ctx.body = {
+                    code: 204,
+                    data: user,
+                    msg: '账户名已存在'
+                }
+            }
             await this.User.save({ username, password })
             ctx.body = {
                 code: 200,

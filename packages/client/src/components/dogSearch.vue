@@ -1,10 +1,17 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, shallowRef } from 'vue'
 
 export default defineComponent((props, { emit }) => {
 
-    return {
+    const formRef = shallowRef()
 
+    const onReset = () => {
+        formRef.value.resetFields()
+        emit('reset')
+    }
+    return {
+        onReset,
+        formRef
     }
 }, {
     name: 'dogSearch',
@@ -17,11 +24,16 @@ export default defineComponent((props, { emit }) => {
 </script>
 
 <template>
-    <a-space>
-        <dogForm v-model="modelValue" v-bind="$attrs" layout="inline" />
+    <div class="dog-search flex justify-between pb4">
         <a-space>
-            <a-button type="primary" @click="$emit('search')">搜索</a-button>
-            <a-button @click="$emit('reset')">重置</a-button>
+            <dogForm ref="formRef" v-model="modelValue" v-bind="$attrs" layout="inline" />
+            <a-space>
+                <a-button type="primary" @click="$emit('search')">搜索</a-button>
+                <a-button @click="onReset">重置</a-button>
+            </a-space>
         </a-space>
-    </a-space>
+        <div>
+            <slot name="button"></slot>
+        </div>
+    </div>
 </template>
