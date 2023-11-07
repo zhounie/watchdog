@@ -10,18 +10,21 @@ export default defineConfig({
         {
             name: 'watchdog',
             dir: 'dist',
-            format: 'iife'
+            format: 'iife',
+            entryFileNames: '[name].[format].js'
         },
-        // {
-        //     name: 'watchdog',
-        //     dir: 'dist',
-        //     format: 'cjs'
-        // },
-        // {
-        //     name: 'watchdog',
-        //     dir: 'dist',
-        //     format: 'es'
-        // }
+        {
+            name: 'watchdog',
+            dir: 'dist',
+            format: 'cjs',
+            entryFileNames: '[name].[format].js'
+        },
+        {
+            name: 'watchdog',
+            dir: 'dist',
+            format: 'es',
+            entryFileNames: '[name].[format].js'
+        }
     ],
     plugins: [
         nodeResolve({

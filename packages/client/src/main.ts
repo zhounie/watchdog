@@ -10,6 +10,13 @@ import dogTable from './components/dogTable.vue'
 
 import 'virtual:uno.css'
 
+import { client } from '@watchdog/core'
+
+client({
+    url: 'http://localhost:3000'
+})
+
+
 const app = createApp(App)
 app.component(dogForm.name, dogForm)
 app.component(dogTable.name, dogTable)

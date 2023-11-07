@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.0",
+    "@watchdog/core": "workspace:*",
     "ant-design-vue": "4.x",
     "axios": "^1.5.0",
     "vue": "^3.3.4",

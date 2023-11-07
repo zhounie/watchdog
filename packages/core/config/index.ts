@@ -1,4 +1,4 @@
 
-const config = () => {
-    
+export const config = (options) => {
+    return options
 }

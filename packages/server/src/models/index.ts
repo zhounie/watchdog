@@ -1,4 +1,4 @@
-import { User } from '../db/index'
+import { User, Performance } from '../db/index'
 
 export class UserModel {
     constructor() {
@@ -63,3 +63,9 @@ export class UserModel {
     }
 }
 
+export class PerformanceModel {
+    async save(params) {
+        const res = await Performance.create(params)
+        return res
+    }
+}

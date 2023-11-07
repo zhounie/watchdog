@@ -17,10 +17,16 @@ const applicationSchema = new mongoose.Schema({
     name: String
 })
 
+const performanceSchema = new mongoose.Schema({
+    lcp: Number,
+    cls: Number,
+    fid: Number
+})
 
 export const User = mongoose.model('User', userSchema)
 export const Errors = mongoose.model('Errors', errorsSchema)
-export const application = mongoose.model('applicationSchema', applicationSchema)
+export const Performance = mongoose.model('Performance', performanceSchema)
+export const Application = mongoose.model('Application', applicationSchema)
 
 export default class DB {
     constructor() {
