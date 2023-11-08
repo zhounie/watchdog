@@ -54,7 +54,9 @@ var watchdog = (function (exports) {
         Type[Type["Error"] = 1] = "Error";
     })(Type || (Type = {}));
     var report = function (log) {
-        navigator.sendBeacon(config.url, new URLSearchParams(log));
+        navigator.sendBeacon(config.url, new Blob([JSON.stringify(log)], {
+            type: 'application/json; charset=UTF-8'
+        }));
     };
 
     var log = {
@@ -86,7 +88,7 @@ var watchdog = (function (exports) {
         });
     };
     function performance$1() {
-        Promise.all([LCP()]).then(function (res) {
+        Promise.all([LCP(), CLS(), FID()]).then(function (res) {
             res.forEach(function (item) {
                 log[String(item.name).toLowerCase()] = item.value;
             });

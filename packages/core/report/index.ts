@@ -13,5 +13,7 @@ export interface Log {
     fid?: number
 }
 export const report = (log: Log) => {
-    navigator.sendBeacon(config.url, new URLSearchParams(log))
+    navigator.sendBeacon(config.url, new Blob([JSON.stringify(log)], {
+        type: 'application/json; charset=UTF-8'
+    }))
 }

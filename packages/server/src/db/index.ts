@@ -21,7 +21,8 @@ const performanceSchema = new mongoose.Schema({
     href: String,
     lcp: Number,
     cls: Number,
-    fid: Number
+    fid: Number,
+    userAgent: String
 })
 
 export const User = mongoose.model('User', userSchema)

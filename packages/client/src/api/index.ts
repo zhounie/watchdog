@@ -8,3 +8,5 @@ export const Login = (params={}) => POST('/user/login', params)
 
 
 export const GetErrorsList = (params = {}) => GET('/errors', params)
+
+export const GetPerformanceList = (params = {}) => GET('/performance', params)

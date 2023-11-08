@@ -16,7 +16,8 @@ class ReportClass {
                     href,
                     lcp,
                     cls,
-                    fid
+                    fid,
+                    userAgent: ctx.request.header['user-agent']
                 })
             }
             ctx.body = {
@@ -24,11 +25,10 @@ class ReportClass {
                 data: true
             }
         } catch (error) {
-            console.log(error);
-            
             ctx.body = {
                 code: 301,
-                data: false
+                data: false,
+                msg: error
             }
         }
     }

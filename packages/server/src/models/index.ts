@@ -67,4 +67,21 @@ export class PerformanceModel {
         const res = await Performance.create(params)
         return res
     }
+    async get(query) {
+        try {
+            let condition = {}
+            const res = await Performance.find(condition).skip((query.pageNum  - 1) * query.pageSize).limit(query.pageSize)
+            const count = await Performance.count(condition)
+            return {
+                items: res,
+                page: {
+                    pageSize: query.pageSize,
+                    pageNum: query.pageNum,
+                    total:count
+                }
+            }
+       } catch (error) {
+            console.log(error);
+       }
+    }
 }

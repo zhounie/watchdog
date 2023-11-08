@@ -51,6 +51,10 @@
       key: 'users',
       label: 'users',
       title: 'users'
+    },{
+      key: 'performance',
+      label: 'performance',
+      title: 'performance'
     }
   ])
 

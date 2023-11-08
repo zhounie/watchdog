@@ -37,7 +37,7 @@ export const CLS = () => {
 }
 
 export function performance () {
-    Promise.all([LCP()]).then(res=>{
+    Promise.all([LCP(), CLS(), FID()]).then(res=>{
         res.forEach(item => {
             log[String(item.name).toLowerCase()] = item.value
         })
