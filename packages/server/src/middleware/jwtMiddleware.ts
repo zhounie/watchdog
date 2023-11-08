@@ -5,7 +5,7 @@ export default function(options = {}) {
 
     return async function(ctx: Context, next) {
         const author = ctx.header.authorization
-        const excludePath = ['/user/login']
+        const excludePath = ['/user/login', '/report']
         if (excludePath.includes(ctx.request.url)) {
             return await next()
         }

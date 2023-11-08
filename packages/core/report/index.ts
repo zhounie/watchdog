@@ -1,4 +1,17 @@
 import { config } from '../config/index'
-export const report = (data) => {
-    navigator.sendBeacon('/report', JSON.stringify(data))
+
+enum Type {
+    Performance,
+    Error,
+}
+
+export interface Log {
+    type: Type
+    href: string
+    lcp?: number
+    cls?: number
+    fid?: number
+}
+export const report = (log: Log) => {
+    navigator.sendBeacon(config.url, new URLSearchParams(log))
 }

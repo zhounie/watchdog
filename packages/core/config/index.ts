@@ -1,4 +1,7 @@
 
-export const config = (options) => {
-    return options
+type Config = {
+    url?: string
+}
+export const config: Config = {
+    url: '/report'
 }

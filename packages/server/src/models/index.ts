@@ -18,7 +18,6 @@ export class UserModel {
             //         })
             //     }
             // }
-            console.log(query);
             
             const res = await User.find(condition).skip((query.pageNum  - 1) * query.pageSize).limit(query.pageSize)
             const count = await User.count(condition)

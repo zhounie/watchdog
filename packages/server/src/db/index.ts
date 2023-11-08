@@ -18,6 +18,7 @@ const applicationSchema = new mongoose.Schema({
 })
 
 const performanceSchema = new mongoose.Schema({
+    href: String,
     lcp: Number,
     cls: Number,
     fid: Number

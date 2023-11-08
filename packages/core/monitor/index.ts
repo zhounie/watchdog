@@ -1,7 +1,7 @@
 import { parseStack } from '../utils/index'
 
 const errors: ErrorItem[] = []
-export const monitor = (options) => {
+export const monitor = () => {
     window.onerror = (errorMessage, sourceURL, lineNumber, columnNumber) => {
         if (errorMessage === 'string') {
             errors.push({

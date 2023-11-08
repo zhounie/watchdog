@@ -8,20 +8,28 @@ class ReportClass {
     constructor() {
     }
     add = async (ctx, next) => {
-        const {
-            type,
-            lcp,
-            cls,
-            fid
-        } = ctx.request.body
+        const params = ctx.request.body
         try {
-            await this.Performance.save({type, lcp, cls, fid})
+            if (+params.type === 0) {
+                const { lcp, cls, fid, href } = params
+                await this.Performance.save({
+                    href,
+                    lcp,
+                    cls,
+                    fid
+                })
+            }
             ctx.body = {
                 code: 200,
                 data: true
             }
         } catch (error) {
+            console.log(error);
             
+            ctx.body = {
+                code: 301,
+                data: false
+            }
         }
     }
 
