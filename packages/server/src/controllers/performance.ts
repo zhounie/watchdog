@@ -8,11 +8,11 @@ class PerformanceClass {
     }
     getPerformance = async (ctx, next) => {
         
-        const users = await this.Performance.get(ctx.request.query)
+        const result = await this.Performance.get(ctx.request.query)
         
         ctx.body = {
             code: 200,
-            data: users
+            data: result
         }
     }
 }

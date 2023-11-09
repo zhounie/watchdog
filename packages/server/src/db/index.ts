@@ -7,10 +7,15 @@ const userSchema = new mongoose.Schema({
 
 
 const errorsSchema = new mongoose.Schema({
+    type: Number,
     message: String,
     source: String,
     lineno: Number,
-    colno: Number
+    colno: Number,
+    tag: String,
+    url: String,
+    errorTime: Number,
+    userAgent: String
 })
 
 const applicationSchema = new mongoose.Schema({

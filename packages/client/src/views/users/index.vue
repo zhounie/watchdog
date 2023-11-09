@@ -4,6 +4,18 @@
     import { message, Modal } from 'ant-design-vue'
     import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
     import { cloneDeep } from 'lodash'
+    
+    fetch('/url2222', {
+            method: "post"
+    })
+    .then(res => {
+        console.log(res);
+        
+    })
+    .catch((error) => {
+        console.log(error);
+        
+    })
 
     defineOptions({
         name: 'Users'
@@ -139,6 +151,7 @@
 
 <template>
     <div>
+        <img src="/a.png" alt="">
         <dogSearch v-model="form" :fields="fields" @search="onSearch" @reset="onReset">
             <template #button>
                 <a-button type="primary" @click="onAdd">新增用户</a-button>

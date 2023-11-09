@@ -6,7 +6,7 @@
     import { cloneDeep } from 'lodash'
 
     defineOptions({
-        name: 'Users'
+        name: 'Performance'
     })
 
     const [modal, contextHolder] = Modal.useModal()

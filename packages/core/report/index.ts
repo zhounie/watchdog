@@ -1,19 +1,24 @@
 import { config } from '../config/index'
 
-enum Type {
-    Performance,
-    Error,
+let logs: Log[] = []
+
+function sendLogs () {
+    const reportStatus = navigator.sendBeacon(
+        config.url,
+        new Blob([JSON.stringify(logs)], {
+            type: 'application/json; charset=UTF-8'
+        })
+    )
+    if (reportStatus) {
+        logs = []
+    }
 }
 
-export interface Log {
-    type: Type
-    href: string
-    lcp?: number
-    cls?: number
-    fid?: number
-}
+window.addEventListener('beforeunload', () => {
+    sendLogs()
+})
+
 export const report = (log: Log) => {
-    navigator.sendBeacon(config.url, new Blob([JSON.stringify(log)], {
-        type: 'application/json; charset=UTF-8'
-    }))
+    logs.push(log)
+    sendLogs()
 }

@@ -1,10 +1,9 @@
 import { onLCP, onFID, onCLS } from 'web-vitals'
 import { report } from '../report'
 import { config } from '../config/index'
-import type { Log } from '../report/index'
 import { toLower } from 'lodash'
 
-const log: Log = {
+const log: PerformanceItem = {
     type: 0,
     href: window.location.href,
     lcp: undefined,
@@ -37,7 +36,7 @@ export const CLS = () => {
 }
 
 export function performance () {
-    Promise.all([LCP(), CLS(), FID()]).then(res=>{
+    Promise.all([LCP()]).then(res=>{
         res.forEach(item => {
             log[String(item.name).toLowerCase()] = item.value
         })

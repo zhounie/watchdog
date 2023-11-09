@@ -1,4 +1,4 @@
-import { User, Performance } from '../db/index'
+import { User, Performance, Errors } from '../db/index'
 
 export class UserModel {
     constructor() {
@@ -63,8 +63,8 @@ export class UserModel {
 }
 
 export class PerformanceModel {
-    async save(params) {
-        const res = await Performance.create(params)
+    async save(params: []) {
+        const res = await Performance.insertMany(params)
         return res
     }
     async get(query) {
@@ -72,6 +72,31 @@ export class PerformanceModel {
             let condition = {}
             const res = await Performance.find(condition).skip((query.pageNum  - 1) * query.pageSize).limit(query.pageSize)
             const count = await Performance.count(condition)
+            return {
+                items: res,
+                page: {
+                    pageSize: query.pageSize,
+                    pageNum: query.pageNum,
+                    total:count
+                }
+            }
+       } catch (error) {
+            console.log(error);
+       }
+    }
+}
+
+
+export class ErrorModel {
+    async save(params: []) {
+        const res = await Errors.insertMany(params)
+        return res
+    }
+    async get(query) {
+        try {
+            let condition = {}
+            const res = await Errors.find(condition).skip((query.pageNum  - 1) * query.pageSize).limit(query.pageSize)
+            const count = await Errors.count(condition)
             return {
                 items: res,
                 page: {
