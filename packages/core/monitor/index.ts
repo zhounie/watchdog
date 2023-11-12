@@ -1,5 +1,5 @@
 import { report } from '../report'
-import { parseStack } from '../utils/index'
+import { parseStack, handlerError } from '../utils/index'
 // import axios from 'axios'
 
 // axios.get('/user?ID=12345')
@@ -24,71 +24,35 @@ export const monitor = () => {
     // }
 
     window.addEventListener('unhandledrejection', (event) => {
-        console.log('-----');
-        
-        console.log(event);
         
         const { stack } = event.reason
-        const errorItem: JsError = parseStack(stack)
+        let errorItem: JsError = parseStack(stack)
+        console.log(errorItem);
+        
+        if (event.reason.name === 'AxiosError') {
+            (errorItem as AxiosError).type = 7;
+            (errorItem as AxiosError).requestUrl = event.reason.config.url;
+            (errorItem as AxiosError).responseUrl = event.reason.request.responseURL;
+            (errorItem as AxiosError).requestParams = event.reason.config.data;
+            (errorItem as AxiosError).responseStatus = event.reason.response.status;
+            (errorItem as AxiosError).header = JSON.stringify(event.reason.config.headers);
+        } else {
+            errorItem = handlerError(errorItem)
+            console.log(errorItem);
+            
+        }
+        
         // errors.push(errorItem)
         report(errorItem)
     })
     
     window.addEventListener("error", (event) => {
-        // JS错误
-        if (event.error instanceof Error) {
-          const errorItem: JsError = {
-            type: undefined,
-            message: event.message,
-            source: event.filename,
-            lineno: event.lineno,
-            colno: event.colno
-          }
-          if (event.error instanceof TypeError) {
-            errorItem.type = 1
-          }
-          if (event.error instanceof ReferenceError) {
-            errorItem.type = 2
-          }
-          if (event.error instanceof SyntaxError) {
-            errorItem.type = 3
-          }
-          if (event.error instanceof RangeError) {
-            errorItem.type = 4
-          }
-          if (event.error instanceof URIError) {
-            errorItem.type = 5
-          }
-          report(errorItem)
-        } else if ( // 资源加载错误
-          event.target instanceof HTMLImageElement ||
-          event.target instanceof HTMLScriptElement ||
-          event.target instanceof HTMLLinkElement
-        ) {
-          const errorItem: SourceError = {
-            type: 6,
-            tag: event.target.tagName.toLowerCase(),
-            url: (event.target as HTMLImageElement).src || (event.target as HTMLLinkElement).href,
-            source: event.target.baseURI,
-            errorTime: Date.now()
-          }
-          report(errorItem)
-        }
-
-
-          //     console.log('-------------');
+        console.log(33333);
         
-    //     console.log(errorMessage);
         
-    //     if (errorMessage === 'string') {
-    //         const errorItem: ErrorItem = {
-    //             type: 1,
-    //             message: errorMessage,
-    //             source: sourceURL,
-    //             lineno: lineNumber,
-    //             colno: columnNumber
-    //         }
-    //         report(errorItem)
-    //     }
+        const errorItem = handlerError(event)
+        console.log(errorItem);
+        
+        report(errorItem)
     }, true);
 }

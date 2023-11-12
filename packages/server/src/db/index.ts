@@ -2,7 +2,11 @@ import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
     username: String,
-    password: String
+    password: String,
+    createTime: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 
@@ -15,11 +19,24 @@ const errorsSchema = new mongoose.Schema({
     tag: String,
     url: String,
     errorTime: Number,
-    userAgent: String
+    requestUrl: String,
+    responseUrl: String,
+    requestParams: String,
+    header: String,
+    responseStatus: Number,
+    userAgent: String,
+    createTime: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 const applicationSchema = new mongoose.Schema({
-    name: String
+    name: String,
+    createTime: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 const performanceSchema = new mongoose.Schema({
@@ -27,7 +44,11 @@ const performanceSchema = new mongoose.Schema({
     lcp: Number,
     cls: Number,
     fid: Number,
-    userAgent: String
+    userAgent: String,
+    createTime: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 export const User = mongoose.model('User', userSchema)

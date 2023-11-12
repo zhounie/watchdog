@@ -84,6 +84,53 @@ export class PerformanceModel {
             console.log(error);
        }
     }
+    async statistics() {
+        try {
+            const res = await Performance.aggregate([
+                {
+                    $group: {
+                        _id: {
+                            $dateToString: {
+                                format: "%Y-%m-%d",
+                                date: "$createTime"
+                            }
+                        },
+                        lcp: {
+                            '$avg': "$lcp"
+                        },
+                        cls: {
+                            '$avg': "$cls"
+                        },
+                        fid: {
+                            '$avg': "$fid"
+                        },
+                        count: {
+                            '$sum': 1
+                        }
+                    },
+                    
+                },
+                {
+                    $project: {
+                        createTime: '$_id',
+                        lcp: '$lcp',
+                        cls: '$cls',
+                        fid: '$fid',
+                        count: '$count',
+                        _id: 0
+                    }
+                },
+                {
+                    $sort: {
+                        createTime: 1
+                    }
+                }
+            ])
+            return res
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 
@@ -94,7 +141,29 @@ export class ErrorModel {
     }
     async get(query) {
         try {
-            let condition = {}
+            let condition: {
+                startTime?: string;
+                endTime?: string;
+                errorTime?: {
+                    $gte: string;
+                    $lte: string;
+                }
+            } = {}
+            Object.entries(query).forEach(([key, value]) => {
+                if (key !== 'pageNum' && key !== 'pageSize') {
+                    condition[key] = value
+                }
+            })
+            if(condition.startTime && condition.endTime) {
+                condition.errorTime = {
+                    $gte: condition.startTime,
+                    $lte: condition.endTime,
+                }
+                delete condition.startTime
+                delete condition.endTime
+            }
+            console.log(condition);
+            
             const res = await Errors.find(condition).skip((query.pageNum  - 1) * query.pageSize).limit(query.pageSize)
             const count = await Errors.count(condition)
             return {

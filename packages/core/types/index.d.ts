@@ -4,11 +4,13 @@ declare enum ErrorType {
     SyntaxError,
     RangeError,
     URIError,
-    SourceError
+    SourceError,
+    AxiosError
 }
 
 interface ErrorItem {
-    type: ErrorType
+    type: ErrorType;
+    errorTime?: number
 }
 
 interface JsError extends ErrorItem {
@@ -16,6 +18,7 @@ interface JsError extends ErrorItem {
     source: string;
     lineno: number;
     colno: number;
+    error: any;
 }
 
 interface SourceError extends ErrorItem {
@@ -23,6 +26,14 @@ interface SourceError extends ErrorItem {
     url: string,
     source: string,
     errorTime: number
+}
+
+interface AxiosError extends JsError, ErrorItem {
+    requestUrl: string,
+    responseUrl: string,
+    requestParams: string,
+    header: string,
+    responseStatus: number,
 }
 
 // interface ErrorItem extends JsError | SourceError {
@@ -39,6 +50,7 @@ interface PerformanceItem {
 
 type Log = SourceError | JsError | PerformanceItem
 
-interface Config {
-    api: string;
+interface Options {
+    url: string;
+    isVue: boolean;
 }

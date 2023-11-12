@@ -4,16 +4,38 @@
     import { message, Modal } from 'ant-design-vue'
     import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
     import { cloneDeep } from 'lodash'
+    import dayjs from 'dayjs'
     defineOptions({
         name: 'Errors'
     })
 
     const [modal, contextHolder] = Modal.useModal()
 
-    const form = ref({})
+    const Type = [
+        '',
+        'TypeError',
+        'ReferenceError',
+        'SyntaxError',
+        'RangeError',
+        'URIError',
+        'SourceError',
+        'AxiosError'
+    ]
+    const form = ref({
+        times: []
+    })
     const fields = reactive({
-        href: {
-            label: 'href'
+        type: {
+            label: "报错类型",
+            type: 'select',
+            options: Type.map((item, index)=> ({
+                label: item,
+                value: index
+            }))
+        },
+        times: {
+            label: '报错时间',
+            type: 'daterange'
         }
     })
 
@@ -21,15 +43,6 @@
         type: {
             title: '错误类型',
             customRender: ({ record }) => {
-                const Type = [
-                    '',
-                    'TypeError',
-                    'ReferenceError',
-                    'SyntaxError',
-                    'RangeError',
-                    'URIError',
-                    'SourceError'
-                ]
                 return Type[record.type]
             }
         },
@@ -39,8 +52,27 @@
         colno: 'colno',
         tag: '错误标签',
         url: '报错路径',
-        errorTime: '报错时间',
-        userAgent: 'userAgent'
+        requestUrl: '请求路径',
+        requestParams: '请求参数',
+        header: {
+            title: '请求头',
+            width: 300
+        },
+        responseUrl: '响应路径',
+        responseStatus: '响应状态',
+        errorTime: {
+            title: '报错时间',
+            width: 200,
+            customRender: ({record}) => {
+                if (record.errorTime) {
+                    return dayjs(record.errorTime).format('YYYY-MM-DD HH:mm:ss') 
+                }
+            }
+        },
+        userAgent: {
+            title: 'userAgent',
+            width: 400
+        }
     })
     const data = ref([])
 
@@ -56,6 +88,11 @@
             ...form.value,
             pageSize: page.pageSize,
             pageNum: page.current
+        }
+        if (Array.isArray(params.times) && params.times.length) {
+            params.startTime = params.times[0].valueOf()
+            params.endTime = params.times[1].valueOf()
+            delete params.times
         }
         GetErrorsList(params).then(res=>{
             if (res.code === 200) {

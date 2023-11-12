@@ -6,11 +6,14 @@ var config = {
 
 var logs = [];
 function sendLogs() {
-    var reportStatus = navigator.sendBeacon(config.url, new Blob([JSON.stringify(logs)], {
-        type: 'application/json; charset=UTF-8'
-    }));
-    if (reportStatus) {
-        logs = [];
+    if (logs.length) {
+        console.log(JSON.stringify(logs));
+        var reportStatus = navigator.sendBeacon(config.url, new Blob([JSON.stringify(logs)], {
+            type: 'application/json; charset=UTF-8'
+        }));
+        if (reportStatus) {
+            logs = [];
+        }
     }
 }
 window.addEventListener('beforeunload', function () {
@@ -18,12 +21,13 @@ window.addEventListener('beforeunload', function () {
 });
 var report = function (log) {
     logs.push(log);
-    sendLogs();
+    // sendLogs()
 };
 
 var parseStack = function (stack) {
     if (stack) {
         var lines = stack.split('\n');
+        // const errorType = /^\w+Error/.exec(lines[0])[0]
         // 解析第一行堆栈信息以获取文件名、行号和列号
         var matches = /.*at\s(.*):(\d+):(\d+)/.exec(lines[1]);
         if (matches) {
@@ -34,13 +38,61 @@ var parseStack = function (stack) {
             //   console.log('Line Number:', lineNumber);
             //   console.log('Column Number:', columnNumber);
             return {
-                type: 1,
+                type: undefined,
                 message: lines[0],
                 source: fileName,
                 lineno: lineNumber,
-                colno: columnNumber
+                colno: columnNumber,
+                errorTime: Date.now(),
+                error: new window[/^\w+Error/.exec(lines[0])[0]](stack)
             };
         }
+    }
+};
+var handlerError = function (event) {
+    console.log(event);
+    // if (typeof event === 'string') {
+    //   const error = parseStack(event)
+    // }
+    // JS错误
+    if (event.error instanceof Error) {
+        var errorItem = {
+            type: undefined,
+            message: event.message,
+            source: event.filename || event.source,
+            lineno: event.lineno,
+            colno: event.colno,
+            errorTime: Date.now()
+        };
+        if (event.error instanceof TypeError) {
+            errorItem.type = 1;
+        }
+        if (event.error instanceof ReferenceError) {
+            errorItem.type = 2;
+        }
+        if (event.error instanceof SyntaxError) {
+            errorItem.type = 3;
+        }
+        if (event.error instanceof RangeError) {
+            errorItem.type = 4;
+        }
+        if (event.error instanceof URIError) {
+            errorItem.type = 5;
+        }
+        return errorItem;
+    }
+    else if ( // 资源加载错误
+    event.target instanceof HTMLImageElement ||
+        event.target instanceof HTMLScriptElement ||
+        event.target instanceof HTMLLinkElement) {
+        var errorItem = {
+            type: 6,
+            tag: event.target.tagName.toLowerCase(),
+            url: event.target.src || event.target.href,
+            source: event.target.baseURI,
+            errorTime: Date.now()
+        };
+        return errorItem;
     }
 };
 
@@ -63,65 +115,29 @@ var monitor = function () {
     //     // }
     // }
     window.addEventListener('unhandledrejection', function (event) {
-        console.log('-----');
-        console.log(event);
         var stack = event.reason.stack;
         var errorItem = parseStack(stack);
+        console.log(errorItem);
+        if (event.reason.name === 'AxiosError') {
+            errorItem.type = 7;
+            errorItem.requestUrl = event.reason.config.url;
+            errorItem.responseUrl = event.reason.request.responseURL;
+            errorItem.requestParams = event.reason.config.data;
+            errorItem.responseStatus = event.reason.response.status;
+            errorItem.header = JSON.stringify(event.reason.config.headers);
+        }
+        else {
+            errorItem = handlerError(errorItem);
+            console.log(errorItem);
+        }
         // errors.push(errorItem)
         report(errorItem);
     });
     window.addEventListener("error", function (event) {
-        // JS错误
-        if (event.error instanceof Error) {
-            var errorItem = {
-                type: undefined,
-                message: event.message,
-                source: event.filename,
-                lineno: event.lineno,
-                colno: event.colno
-            };
-            if (event.error instanceof TypeError) {
-                errorItem.type = 1;
-            }
-            if (event.error instanceof ReferenceError) {
-                errorItem.type = 2;
-            }
-            if (event.error instanceof SyntaxError) {
-                errorItem.type = 3;
-            }
-            if (event.error instanceof RangeError) {
-                errorItem.type = 4;
-            }
-            if (event.error instanceof URIError) {
-                errorItem.type = 5;
-            }
-            report(errorItem);
-        }
-        else if ( // 资源加载错误
-        event.target instanceof HTMLImageElement ||
-            event.target instanceof HTMLScriptElement ||
-            event.target instanceof HTMLLinkElement) {
-            var errorItem = {
-                type: 6,
-                tag: event.target.tagName.toLowerCase(),
-                url: event.target.src || event.target.href,
-                source: event.target.baseURI,
-                errorTime: Date.now()
-            };
-            report(errorItem);
-        }
-        //     console.log('-------------');
-        //     console.log(errorMessage);
-        //     if (errorMessage === 'string') {
-        //         const errorItem: ErrorItem = {
-        //             type: 1,
-        //             message: errorMessage,
-        //             source: sourceURL,
-        //             lineno: lineNumber,
-        //             colno: columnNumber
-        //         }
-        //         report(errorItem)
-        //     }
+        console.log(33333);
+        var errorItem = handlerError(event);
+        console.log(errorItem);
+        report(errorItem);
     }, true);
 };
 
@@ -156,7 +172,7 @@ var CLS = function () {
     });
 };
 function performance$1() {
-    Promise.all([LCP()]).then(function (res) {
+    Promise.all([LCP(), CLS(), FID()]).then(function (res) {
         res.forEach(function (item) {
             log[String(item.name).toLowerCase()] = item.value;
         });
@@ -165,6 +181,19 @@ function performance$1() {
         console.log(err);
     });
 }
+
+var vuePlugin = function () {
+    return {
+        install: function (app, options) {
+            app.config.errorHandler = function (err) {
+                console.log('11111111111111111111');
+                console.log(err);
+                var errorItem = handlerError(err);
+                report(errorItem);
+            };
+        }
+    };
+};
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -17372,11 +17401,14 @@ lodash.exports;
 
 var lodashExports = lodash.exports;
 
-var client = function (options) {
+function client(options) {
     lodashExports.merge(config, options);
     performance$1();
     monitor();
-};
+    if (options.isVue) {
+        return vuePlugin();
+    }
+}
 // export class client {
 //     data = []
 //     constructor(options: Options) {
@@ -17392,3 +17424,4 @@ exports.client = client;
 exports.monitor = monitor;
 exports.performance = performance$1;
 exports.report = report;
+//# sourceMappingURL=index.cjs.js.map

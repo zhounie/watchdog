@@ -59,7 +59,7 @@ export default defineComponent((props: DogTableProps, { slots }) => {
 
 <template>
     <div>
-        <a-table :dataSource="data" :columns="rawColumns" v-bind="$attrs">
+        <a-table :dataSource="data" :columns="rawColumns" :scroll="{ x: 1500 }" v-bind="$attrs">
             <template #bodyCell="{ column, record }">
                 <template v-if="column.key === 'operation'">
                     <slot name="button" :row="record" :column="column"></slot>

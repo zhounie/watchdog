@@ -15,6 +15,14 @@ class PerformanceClass {
             data: result
         }
     }
+    statistics = async (ctx, next) => {
+        const result = await this.Performance.statistics()
+
+        ctx.body = {
+            code: 200,
+            data: result
+        }
+    }
 }
 
 export const Performance = new PerformanceClass()

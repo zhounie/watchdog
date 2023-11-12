@@ -7,14 +7,31 @@
         @select="onSelectMenu">
         </a-menu>
       </a-layout-sider>
-      <a-layout>
-        <a-layout-header style="background: #fff; padding: 0">
-          <menu-unfold-outlined
-            v-if="collapsed"
-            class="trigger"
-            @click="() => (collapsed = !collapsed)"
-          />
-          <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
+      <a-layout class="layout-container-box">
+        <a-layout-header class="flex justify-between" style="background: #fff; padding: 0">
+          <div>
+            <menu-unfold-outlined
+              v-if="collapsed"
+              class="trigger"
+              @click="() => (collapsed = !collapsed)"
+            />
+            <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
+          </div>
+          <div class="px-[24px]">
+            <a-dropdown :arrow="true">
+              <a class="ant-dropdown-link" @click.prevent>
+                <a-avatar src="https://www.antdv.com/assets/logo.1ef800a8.svg" />
+                <DownOutlined />
+              </a>
+              <template #overlay>
+                <a-menu @click="onClick">
+                  <a-menu-item key="logout">
+                    退出登录
+                  </a-menu-item>
+                </a-menu>
+              </template>
+            </a-dropdown>
+          </div>
         </a-layout-header>
         <a-layout-content
           class="main-box"
@@ -36,6 +53,7 @@
     MenuUnfoldOutlined,
     MenuFoldOutlined,
   } from '@ant-design/icons-vue';
+  import { DownOutlined } from '@ant-design/icons-vue'
   import { useRouter } from 'vue-router'
   const router = useRouter()
   
@@ -61,11 +79,23 @@
   const onSelectMenu = ({ key }) => {
     router.push(`/${key}`)
   }
+
+  const onClick = ({ key }) => {
+    if (key === 'logout') {
+      router.push('/login')
+    }
+  }
   </script>
 
   <style scoped lang="scss">
   .layout-container{
     height: 100vh;
+    background: #001529;
+  }
+  .layout-container-box {
+    margin: 10px;
+    border-radius: 10px;
+    overflow: hidden;
   }
   .trigger {
     font-size: 18px;

@@ -12,12 +12,20 @@ import 'virtual:uno.css'
 
 import { client } from '@watchdog/core'
 
-client({
-    url: '/api/report'
-})
 
 
 const app = createApp(App)
+app.use(client({
+    url: '/api/report',
+    isVue: true
+}))
+
+
+// app.config.errorHandler = (err, instance, info) => {
+//     console.log(err);
+//     console.log(instance);
+//     console.log(info);
+// }
 app.component(dogForm.name, dogForm)
 app.component(dogTable.name, dogTable)
 app.component(dogSearch.name, dogSearch)

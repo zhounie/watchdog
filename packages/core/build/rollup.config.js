@@ -11,19 +11,22 @@ export default defineConfig({
             name: 'watchdog',
             dir: 'dist',
             format: 'iife',
-            entryFileNames: '[name].[format].js'
+            entryFileNames: '[name].[format].js',
+            sourcemap: true
         },
         {
             name: 'watchdog',
             dir: 'dist',
             format: 'cjs',
-            entryFileNames: '[name].[format].js'
+            entryFileNames: '[name].[format].js',
+            sourcemap: true
         },
         {
             name: 'watchdog',
             dir: 'dist',
             format: 'es',
-            entryFileNames: '[name].[format].js'
+            entryFileNames: '[name].[format].js',
+            sourcemap: true
         }
     ],
     plugins: [

@@ -4,7 +4,6 @@
     import { message, Modal } from 'ant-design-vue'
     import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
     import { cloneDeep } from 'lodash'
-    
     fetch('/url2222', {
             method: "post"
     })
