@@ -162,7 +162,6 @@ export class ErrorModel {
                 delete condition.startTime
                 delete condition.endTime
             }
-            console.log(condition);
             
             const res = await Errors.find(condition).skip((query.pageNum  - 1) * query.pageSize).limit(query.pageSize)
             const count = await Errors.count(condition)

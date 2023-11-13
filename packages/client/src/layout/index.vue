@@ -1,10 +1,19 @@
 <template>
     <a-layout class="layout-container">
-      <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
+      <a-layout-sider
+        v-model:collapsed="collapsed"
+        :trigger="null"
+        collapsible
+        :width="240"
+      >
         <div class="logo" />
-        <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline"
+        <a-menu
+          v-model:selectedKeys="selectedKeys"
+          theme="dark"
+          mode="inline"
           :items="menu"
-        @select="onSelectMenu">
+          @select="onSelectMenu"
+        >
         </a-menu>
       </a-layout-sider>
       <a-layout class="layout-container-box">
@@ -93,9 +102,31 @@
     background: #001529;
   }
   .layout-container-box {
-    margin: 10px;
+    margin: 10px 10px 10px 0;
     border-radius: 10px;
     overflow: hidden;
+  }
+  :deep(.ant-menu) {
+    .ant-menu-item {
+      height: 50px;
+      line-height: 50px;
+      margin: 4px 0 4px 4px;
+      width: 100%;
+      box-sizing: border-box;
+      width: calc(100% - 4px);
+      border-radius: 8px 0 0 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .ant-menu-item:not(.ant-menu-item-selected):active {
+      background: #cfcfcf;
+      color: #fff;
+    }
+    .ant-menu-item.ant-menu-item-selected {
+      background: #f5f5f5;
+      color: #001529;
+    }
   }
   .trigger {
     font-size: 18px;
@@ -110,7 +141,7 @@
   }
   
   .ant-layout-sider .logo {
-    height: 32px;
+    height: 42px;
     background: rgba(255, 255, 255, 0.3);
     margin: 16px;
   }

@@ -2,7 +2,7 @@
 import { onMounted, ref, onUnmounted } from 'vue'
 import { GetPerformanceStatistics } from '@/api/index'
 import * as echarts from 'echarts';
-import type { ECharts } from 'echarts'
+import type { ECharts, EChartsOption } from 'echarts'
 import { cloneDeep, debounce } from 'lodash'
 
 const lcpRef = ref()
@@ -14,7 +14,10 @@ const fidData = ref()
 let lcpChart: ECharts | null = null
 let clsChart: ECharts | null = null
 let fidChart: ECharts | null = null
-const option = {
+const option: EChartsOption = {
+  grid: {
+    height: '160px'
+  },
   xAxis: {
     type: 'category',
     data: []
@@ -114,13 +117,13 @@ onUnmounted(() => {
     <div>
         <!-- <div ref="chatRef" class="h-2xl"></div> -->
         <div class="flex flex-wrap gap-xl">
-          <div class="flex-1 min-w-120 max-w-160">
+          <div class="flex-1 min-w-120 max-w-160 bg-white border-rd-2 p-3">
             <div ref="lcpRef" class="h-60 lcp"></div>
           </div>
-          <div class="flex-1 min-w-120 max-w-160">
+          <div class="flex-1 min-w-120 max-w-160 bg-white border-rd-2 p-3">
             <div ref="clsRef"  class="h-60 cls"></div>
           </div>
-          <div class="flex-1 min-w-120 max-w-160">
+          <div class="flex-1 min-w-120 max-w-160 bg-white border-rd-2 p-3">
             <div ref="fidRef"  class="h-60 fid"></div>
           </div>
         </div>

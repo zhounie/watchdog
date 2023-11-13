@@ -15,6 +15,8 @@ class ReportClass {
             params.forEach((item) => {
                 item.userAgent = userAgent
             })
+            console.log(params);
+            
             const performanceList = params.filter(item => (+item.type) === 0)
             const errorList = params.filter(item => (+item.type) !== 0)
             if (performanceList.length) {

@@ -135,6 +135,7 @@ var monitor = function () {
     });
     window.addEventListener("error", function (event) {
         console.log(33333);
+        console.log(event);
         var errorItem = handlerError(event);
         console.log(errorItem);
         report(errorItem);
@@ -172,7 +173,9 @@ var CLS = function () {
     });
 };
 function performance$1() {
+    console.log(111);
     Promise.all([LCP(), CLS(), FID()]).then(function (res) {
+        console.log(res);
         res.forEach(function (item) {
             log[String(item.name).toLowerCase()] = item.value;
         });

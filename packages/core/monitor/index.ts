@@ -49,6 +49,7 @@ export const monitor = () => {
     window.addEventListener("error", (event) => {
         console.log(33333);
         
+        console.log(event);
         
         const errorItem = handlerError(event)
         console.log(errorItem);

@@ -4,6 +4,7 @@
     import { message, Modal } from 'ant-design-vue'
     import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
     import { cloneDeep } from 'lodash'
+    import dayjs from 'dayjs'
 
     defineOptions({
         name: 'Performance'
@@ -20,10 +21,31 @@
 
     const columns = ref({
         href: 'href',
-        lcp: 'LCP',
-        fid: 'FID',
-        cls: 'CLS',
-        userAgent: 'userAgent'
+        lcp: {
+            title: 'LCP',
+            customRender: ({ record }) => {
+                return `${Number(record.lcp).toFixed(2)}ms`
+            }
+        },
+        fid: {
+            title: 'FID',
+            customRender: ({ record }) => {
+                return `${Number(record.fid).toFixed(2)}ms`
+            }
+        },
+        cls: {
+            title: 'CLS',
+            customRender: ({ record }) => {
+                return `${Number(record.cls).toFixed(2)}ms`
+            }
+        },
+        userAgent: 'userAgent',
+        createTime: {
+            title: 'createTime',
+            customRender: ({ record }) => {
+                return dayjs(record.createTime).format('YYYY-MM-DD HH:mm:ss')
+            }
+        }
     })
     const data = ref([])
 
@@ -146,8 +168,6 @@
         <dogSearch v-model="form" :fields="fields" @search="onSearch" @reset="onReset">
         </dogSearch>
         <dogTable :columns="columns" :data="data" :pagination="page"  @change="handleTableChange">
-            <template #button="{row}">
-            </template>
         </dogTable>
         <contextHolder />
     </div>

@@ -24,6 +24,7 @@ export default defineComponent((props: DogTableProps, { slots }) => {
             key
         }
     })
+    console.log(slots.button);
     
     if(typeof slots.button === 'function') {
         rawColumns.push({
