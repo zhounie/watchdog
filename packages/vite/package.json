@@ -1,0 +1,16 @@
+{
+  "name": "@watchdog/vite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@watchdog/core": "workspace:*"
+  }
+}
