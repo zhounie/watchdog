@@ -7,6 +7,8 @@
           theme="dark"
           mode="horizontal"
           :style="{ lineHeight: '64px' }"
+          :items="menu"
+          @select="onSelectMenu"
         >
           <a-menu-item key="1">nav 1</a-menu-item>
           <a-menu-item key="2">nav 2</a-menu-item>
@@ -29,6 +31,29 @@
   <script lang="ts" setup>
   import { ref } from 'vue';
   const selectedKeys = ref<string[]>(['2']);
+  import { useRouter } from 'vue-router'
+  const router = useRouter()
+  const menu = ref([
+    {
+      key: 'errors',
+      label: 'errors',
+      title: 'errors'
+    },{
+      key: 'users',
+      label: 'users',
+      title: 'users'
+    },{
+      key: 'performance',
+      label: 'performance',
+      title: 'performance'
+    }
+  ])
+
+  const onSelectMenu = ({ key }) => {
+    router.push(`/${key}`)
+  }
+
+
   </script>
 
   <style lang="scss" scoped>

@@ -1,4 +1,6 @@
-export default function watchdogPlugin(options) {
+'use strict';
+
+function watchdogPlugin(options) {
     console.log(options);
     
     console.log('111111--------------');
@@ -11,3 +13,5 @@ export default function watchdogPlugin(options) {
         }
     }
 }
+
+module.exports = watchdogPlugin;
