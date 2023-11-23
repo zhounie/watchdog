@@ -21,6 +21,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
     "@iszhounie/eslint-config": "^1.0.3",
     "@jest/globals": "^29.7.0",
     "@types/lodash": "^4.14.200",
@@ -42,6 +44,6 @@
     "lodash": "^4.17.21"
   },
   "lint-staged": {
-    "*": "eslint --fix"
+    "*.{ts,vue}": "eslint --fix"
   }
 }
