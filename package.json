@@ -9,6 +9,7 @@
     "test": "jest",
     "build": "pnpm run --filter @watchdog/core build",
     "client:preview": "pnpm run --filter @watchdog/client preview",
+    "dev:docs": "pnpm run --filter docs docs:dev",
     "dev:client": "pnpm run --filter @watchdog/client dev",
     "dev:server": "pnpm run --filter @watchdog/server start",
     "bulid:client": "pnpm run --filter @watchdog/client build",
