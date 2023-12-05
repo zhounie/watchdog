@@ -8,10 +8,10 @@
   "scripts": {
     "test": "jest",
     "build": "pnpm run --filter @watchdog/core build",
-    "server": "pnpm run --filter @watchdog/server start",
-    "client:dev": "pnpm run --filter @watchdog/client dev",
-    "client:build": "pnpm run --filter @watchdog/client build",
     "client:preview": "pnpm run --filter @watchdog/client preview",
+    "dev:client": "pnpm run --filter @watchdog/client dev",
+    "dev:server": "pnpm run --filter @watchdog/server start",
+    "bulid:client": "pnpm run --filter @watchdog/client build",
     "demo": "http-server",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
