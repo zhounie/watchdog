@@ -1,4 +1,23 @@
-## 错误监控
+# Watchdog
+
+### Usage
+
+```sh
+# npm
+npm add watchdog
+```
+
+```sh
+# pnpm
+pnpm add watchdog
+```
+
+```sh
+# yarn
+yarn add watchdog
+```
+
+<!-- ## 错误监控
 
 ## 性能监控
 1. Page Load Time
@@ -38,4 +57,4 @@
         var timeToInteractive = endTime - startTime;
         console.log('Time to Interactive:', timeToInteractive);
     });
-   ```
+   ``` -->
