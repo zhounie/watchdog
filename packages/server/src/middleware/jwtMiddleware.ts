@@ -1,4 +1,4 @@
-import type { Context }from 'koa'
+import type { Context } from 'koa'
 import jwt from 'jsonwebtoken'
 
 export default function(options = {}) {
