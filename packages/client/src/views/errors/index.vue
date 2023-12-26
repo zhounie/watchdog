@@ -133,6 +133,6 @@
             </template>
         </dogTable>
         <contextHolder />
-        <img src="/app.png" alt="">
+        <!-- <img src="/app.png" alt=""> -->
     </div>
 </template>

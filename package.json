@@ -12,7 +12,7 @@
     "dev:docs": "pnpm run --filter docs docs:dev",
     "dev:client": "pnpm run --filter @watchdog/client dev",
     "dev:server": "pnpm run --filter @watchdog/server start",
-    "bulid:client": "pnpm run --filter @watchdog/client build",
+    "build:client": "pnpm run --filter @watchdog/client build",
     "demo": "http-server",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
