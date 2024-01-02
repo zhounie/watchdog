@@ -1,9 +1,12 @@
-import { test, describe, jest, it, expect } from '@jest/globals'
+import { test, describe, jest, it, expect, afterEach } from '@jest/globals'
 import request from 'supertest'
 import app from '../src/index'
 import jwt from 'jsonwebtoken'
 
 describe('测试Login', () => {
+    afterEach(() => {
+        app.close()
+    })
     test('登录成功', async () => {
             const response = await request(app)
                 .post('/user/login')
@@ -25,5 +28,6 @@ describe('测试Login', () => {
                 password: '1234566'
             })
         expect(response.status).toBe(200)
+        expect(response.body.code).toBe(403)
     })
 })

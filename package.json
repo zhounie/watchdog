@@ -7,6 +7,7 @@
   "packageManager": "pnpm@8.6.12",
   "scripts": {
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --config --watch",
+    "test:cov": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage",
     "build": "pnpm run --filter @watchdog/core build",
     "client:preview": "pnpm run --filter @watchdog/client preview",
     "dev:docs": "pnpm run --filter docs docs:dev",
@@ -28,7 +29,7 @@
     "@babel/preset-typescript": "^7.23.3",
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
-    "@iszhounie/eslint-config": "^1.0.3",
+    "@iszhounie/eslint-config": "^1.0.5",
     "@jest/globals": "^29.7.0",
     "@types/lodash": "^4.14.200",
     "@types/node": "^20.6.0",
