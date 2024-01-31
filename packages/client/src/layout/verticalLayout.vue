@@ -1,19 +1,11 @@
 <template>
     <a-layout class="vertical-layout">
       <a-layout-header>
-        <div class="logo" />
-        <a-menu
-          v-model:selectedKeys="selectedKeys"
-          theme="dark"
-          mode="horizontal"
-          :style="{ lineHeight: '64px' }"
-          :items="menu"
-          @select="onSelectMenu"
-        >
-          <a-menu-item key="1">nav 1</a-menu-item>
-          <a-menu-item key="2">nav 2</a-menu-item>
-          <a-menu-item key="3">nav 3</a-menu-item>
-        </a-menu>
+        <Logo :isVertical="true" />
+        <div class="menu">
+          <Menu mode="horizontal" />
+        </div>
+        <Logout />
       </a-layout-header>
 
       <a-layout-content>
@@ -30,24 +22,13 @@
 
   <script lang="ts" setup>
   import { ref } from 'vue';
-  const selectedKeys = ref<string[]>(['2']);
   import { useRouter } from 'vue-router'
+  import { menu } from '@/config/menu'
+  import Logout from './components/Logout.vue'
+  import Logo from './components/Logo.vue'
+  import Menu from './components/Menu.vue'
+
   const router = useRouter()
-  const menu = ref([
-    {
-      key: 'errors',
-      label: 'errors',
-      title: 'errors'
-    },{
-      key: 'users',
-      label: 'users',
-      title: 'users'
-    },{
-      key: 'performance',
-      label: 'performance',
-      title: 'performance'
-    }
-  ])
 
   const onSelectMenu = ({ key }) => {
     router.push(`/${key}`)
@@ -69,14 +50,22 @@
         overflow: hidden;
         box-sizing: border-box;
     }
+    .ant-layout-header {
+      display: flex;
+      align-items: center;
+      padding-inline: 0;
+      .menu {
+        flex: 1;
+      }
+    }
   }
-  #components-layout-demo-fixed .logo {
-    width: 120px;
-    height: 31px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 16px 24px 16px 0;
-    float: left;
-  }
+  // #components-layout-demo-fixed .logo {
+  //   width: 120px;
+  //   height: 31px;
+  //   background: rgba(255, 255, 255, 0.2);
+  //   margin: 16px 24px 16px 0;
+  //   float: left;
+  // }
 //   .site-layout .site-layout-background {
 //     background: #fff;
 //   }
